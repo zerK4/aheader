@@ -1,13 +1,11 @@
-import { NextPageContext } from "next";
 import { getProviders, signIn, getSession } from "next-auth/react";
-import { Provider } from "next-auth/providers";
 import { AiFillGithub } from "react-icons/ai";
 import global from "../state/global";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader.component";
 import { SignInProps } from "@/types/ComponentTypes/Authentication";
 
-export default function SignIn(props: SignInProps) {
+export default function Login(props: SignInProps) {
   const { providers } = props;
   const { loading } = global();
   const router = useRouter();
@@ -43,7 +41,6 @@ export default function SignIn(props: SignInProps) {
   );
 }
 
-// This is the recommended way for Next.js 9.3 or newer
 export async function getServerSideProps(ctx: any) {
   const providers = await getProviders();
   const {
@@ -54,7 +51,7 @@ export async function getServerSideProps(ctx: any) {
   const session = await getSession({ req });
 
   if (session) {
-    redirect(302, {
+    await redirect(302, {
       Location: "/",
     });
     end();
