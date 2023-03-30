@@ -4,6 +4,9 @@ import global from "../state/global";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader.component";
 import { SignInProps } from "@/types/ComponentTypes/Authentication";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Login(props: SignInProps) {
   const { providers } = props;
@@ -41,26 +44,16 @@ export default function Login(props: SignInProps) {
   );
 }
 
-export async function getServerSideProps(ctx: any) {
-  const providers = await getProviders();
-  const {
-    res: { end },
-    res: { writeHead: redirect },
-    req,
-  } = ctx;
-  const session = await getSession({ req });
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   if (session) {
-    await redirect(302, {
-      Location: "/",
-    });
-    end();
+    return { redirect: { destination: "/" } };
   }
 
+  const providers = await getProviders();
+
   return {
-    props: {
-      session: session,
-      providers: providers,
-    },
+    props: { providers: providers ?? [] },
   };
 }
