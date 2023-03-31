@@ -11,6 +11,38 @@ datasource db {
   relationMode = "prisma"
 }
 
+// ? Account schema ----------------------------------------------------------------
+model Account {
+  id         Int       @id @default(autoincrement())
+  login      String
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  githubId   String    @unique
+  email      String?
+  name       String?
+  avatarUrl  String?
+  bio        String?
+  location   String?
+  websiteUrl String?
+  company    String?
+  repoUrl    String?
+  repos      Repo[]
+}
+
+// ? Github repo schema ----------------------------------------------------------------
+model Repo {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  name      String?
+  owner     String?
+  githubId  String
+  account   Account   @relation(fields: [githubId], references: [githubId])
+
+  @@index([githubId])
+}
+
+// ? Log schema ----------------------------------------------------------------
 model Log {
   id        Int      @id @unique @default(autoincrement())
   level     String

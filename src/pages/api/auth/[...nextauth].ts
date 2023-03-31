@@ -1,13 +1,26 @@
-import { randomBytes, randomUUID } from "crypto"
-import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
+import NextAuth, { AuthOptions, Profile, User } from "next-auth"
+import { createAccount } from "@/lib/prismaFunctions/accounts"
 
 const githubId: string = process.env.GITHUB_ID!
 const clientSecret: string = process.env.GITHUB_SECRET!
 const secret = process.env.JWT_SECRET!
-const nodeEnv = process.env.NODE_ENV!
 
-export const authOptions = {
+export interface UserProfile extends Profile {
+  login: string;
+  created_at: Date | undefined;
+  updated_at: Date | undefined;
+  githubId: string;
+  email: string | undefined;
+  name: string | undefined;
+  avatar_url: string | undefined;
+  bio: string | undefined;
+  location: string | undefined;
+  company: string | undefined;
+  repos_url: string
+}
+
+export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -17,17 +30,28 @@ export const authOptions = {
     // ...add more providers here
   ],
   secret: secret,
-  debugger: nodeEnv === "development" ? true : false,
-  logger: {
-    error(code: any, metadata: any) {
-      console.error(code, metadata);
-    },
-    debug(code: any, metadata: any) {
-      console.debug(code, metadata)
+  callbacks: {
+    async signIn(params) {
+      const { profile, account, user }  = params;
+      const userProfile = profile as UserProfile;
+
+      const data: UserProfile = {
+        login: userProfile.login,
+        created_at: userProfile.created_at,
+        updated_at: userProfile.updated_at,
+        githubId: user.id,
+        email: userProfile.email,
+        name: userProfile.name,
+        avatar_url: userProfile.avatar_url,
+        bio: userProfile.bio,
+        location: userProfile.location,
+        company: userProfile.company,
+        repos_url: userProfile.repos_url,
+      }
+
+      await createAccount(data);
+      return true;
     }
-  },
-  generateSessionToken: () => {
-    return randomUUID?.() ?? randomBytes(32).toString("hex")
   }
 }
 export default NextAuth(authOptions)
