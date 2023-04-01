@@ -1,3 +1,4 @@
+import SearchBarComponent from "@/components/SearchBarComponent/SearchBar.component";
 import MainLayout from "@/layouts/MainLayout/Main.layout";
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "./_app";
@@ -5,8 +6,7 @@ import { NextPageWithLayout } from "./_app";
 const Home: NextPageWithLayout = () => {
   return (
     <div className="flex items-center flex-col gap-10">
-      <h1 className="text-4xl font-semibold">Aheader.ink</h1>
-      <p className="text-xl">From juniors for juniors</p>
+      <SearchBarComponent />
     </div>
   );
 };

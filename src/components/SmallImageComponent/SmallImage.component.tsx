@@ -1,20 +1,24 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
-import { SessionInterface } from "../UserProfileHeaderComponent/UserProfileHeader.component";
+import Loader from "../Loader/Loader.component";
 
-function SmallImageComponent({ session }: SessionInterface) {
-  const {
-    user: { image, name },
-  } = session;
+function SmallImageComponent() {
+  const { data: { user: { image, name } = { image: "", name: "" } } = {} } =
+    useSession();
   return (
     <div>
-      <Image
-        width="50"
-        height="50"
-        alt={name}
-        src={image}
-        className="rounded-full"
-      />
+      {!image ? (
+        <Loader />
+      ) : (
+        <Image
+          width="30"
+          height="30"
+          alt={name}
+          src={image}
+          className="rounded-full"
+        />
+      )}
     </div>
   );
 }

@@ -2,33 +2,20 @@ import global from "../../state/global";
 import React from "react";
 import { motion } from "framer-motion";
 import { userMenu } from "../../statics/userMenu";
-import { SessionInterface } from "../UserProfileHeaderComponent/UserProfileHeader.component";
 import { IoIosLogOut } from "react-icons/io";
+import { userMenuVariants } from "@/lib/motionVariants";
+import { useSession } from "next-auth/react";
 
-function UserPopupComponent({ session }: SessionInterface) {
+function UserPopupComponent() {
+  const { data: { user: { name, email } = { name: "", email: "" } } = {} } =
+    useSession();
   const {
     userPopup: { active },
   } = global();
-  const {
-    user: { email, name },
-  } = session;
 
-  if (!active) {
+  if (!active || !name) {
     return null;
   }
-
-  const userMenuVariants = {
-    visible: (i: any) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    }),
-    hidden: { opacity: 0, y: -50 },
-  };
 
   return (
     <motion.div
@@ -36,14 +23,14 @@ function UserPopupComponent({ session }: SessionInterface) {
       initial={{ height: 0, opacity: 0, display: "none" }}
       animate={{ height: "fit-content", opacity: 1, display: "flex" }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="absolute top-[100%] right-0 bg-black pb-6 w-fit rounded-lg border-2 border-neutral-900"
+      className="absolute top-[120%] right-0 bg-black pb-6 w-[15rem] rounded-lg border-2 border-neutral-900"
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         <ul className="px-4 pb-4 flex flex-col gap-2 bg-[#111111] shadow-lg shadow-neutral-900 pt-6">
           <li className="w-full">{name}</li>
           <li className="w-full">{email}</li>
         </ul>
-        {userMenu.map((item, i) => (
+        {userMenu?.map((item, i) => (
           <motion.li
             custom={i}
             initial="hidden"
