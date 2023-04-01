@@ -13,4 +13,6 @@ export interface GlobalState {
     };
     completeOverflowOff: boolean;
     setActiveOverflowOff: (active: boolean) => void;
+    sidebarActive: boolean;
+    setSidebarState: (active: boolean) => void;
 }

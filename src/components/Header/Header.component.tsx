@@ -1,5 +1,5 @@
 import React from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import global from "@/state/global";
 import LoginPopup from "../LoginPopup/LoginPopup.component";
 import UserProfileHeaderComponent from "../UserProfileHeaderComponent/UserProfileHeader.component";
@@ -28,7 +28,6 @@ function Header() {
           },
         })
       )}
-      <LoginPopup />
     </div>
   );
 }
