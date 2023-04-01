@@ -3,33 +3,9 @@ import React from "react";
 import SmallImageComponent from "../SmallImageComponent/SmallImage.component";
 import { motion } from "framer-motion";
 import { userMenu } from "@/statics/userMenu";
-import { userMenuVariants } from "@/lib/motionVariants";
+import { menuVariants, userMenuVariants } from "@/lib/motionVariants";
 import { IoIosLogOut } from "react-icons/io";
 import { useSession } from "next-auth/react";
-
-const menuVariants = {
-  hidden: {
-    opacity: 1,
-    height: "3rem",
-    width: "3rem",
-    borderRadius: "50px",
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-  visible: {
-    opacity: 1,
-    borderRadius: "10px",
-    height: "23rem",
-    width: "15rem",
-    transition: {
-      duration: 0.5,
-      ease: "easeInOut",
-      delay: 0.1,
-    },
-  },
-};
 
 function UserProfileHeaderComponent() {
   const { data: { user: { email, name } = { email: "", name: "" } } = {} } =
