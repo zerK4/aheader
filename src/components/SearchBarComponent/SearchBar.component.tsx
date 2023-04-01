@@ -1,62 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
-
-const searchBarVariants = {
-  open: {
-    width: "20rem",
-    borderRadius: "0.5rem",
-    border: "2px solid #023e8a",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-  closed: {
-    width: "4rem",
-    borderRadius: "8px",
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25,
-    },
-  },
-};
-const searchTextVariants = {
-  open: {
-    opacity: 0,
-    transition: {
-      delay: 0.3,
-    },
-  },
-  closed: {
-    opacity: 1,
-    transition: {
-      delay: 0.3,
-    },
-  },
-};
-const searchIconVariants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.3,
-    },
-  },
-  closed: {
-    opacity: 0,
-    y: "-100px",
-    transition: {
-      delay: 0.3,
-    },
-  },
-};
+import {
+  searchBarVariants,
+  searchIconVariants,
+  searchTextVariants,
+} from "@/lib/motionVariants";
 
 function SearchBarComponent() {
   const [active, setActive] = useState(false);
-  console.log(active);
 
   return (
     <motion.div

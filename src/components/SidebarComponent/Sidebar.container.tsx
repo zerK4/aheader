@@ -3,6 +3,12 @@ import Image from "next/image";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsBookmarkCheck } from "react-icons/bs";
 import { GoProject } from "react-icons/go";
+import { motion } from "framer-motion";
+import {
+  sidebarVariants,
+  userSpaceLinksVariant,
+  userSpaceVariant,
+} from "@/lib/motionVariants";
 
 const iconClass = "text-xl";
 const icons = [
@@ -21,22 +27,30 @@ const icons = [
 ];
 
 interface UserInterface {
-  user: {
-    email: string;
-    image: string;
-    name: string;
+  session: {
+    user: {
+      email: string;
+      image: string;
+      name: string;
+    };
   };
+  sidebarActive: boolean;
 }
 
-export const renderUserSpace = (session: UserInterface) => {
+export const renderUserSpace = (props: UserInterface) => {
   const {
-    user: { email, name, image },
-  } = session;
-  if (!session) {
-    return null;
-  }
+    session: {
+      user: { email, name, image } = { email: "", name: "", image: "" },
+    } = {},
+    sidebarActive,
+  } = props;
+
   return (
-    <div className="hidden bg-black md:flex flex-col items-center relative rounded-md border-2 border-neutral-800 w-[100%] h-fit text-neutral-400">
+    <motion.div
+      variants={userSpaceVariant}
+      animate={sidebarActive ? "visible" : "hidden"}
+      className={` bg-black flex-col items-center relative rounded-md border-2 border-neutral-800 w-[100%] h-fit text-neutral-400`}
+    >
       <div className="w-20">
         <Image
           src="/images/cover.avif"
@@ -69,25 +83,38 @@ export const renderUserSpace = (session: UserInterface) => {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-export const renderLinks = () => {
+export const renderLinks = (sidebarActive: boolean) => {
   return sidebarLinks.map((link, i) => {
     const Icon = icons.map((icon) => {
       return icon.name === link.icon ? (
-        <span key={icon.name}>{icon.icon}</span>
+        <motion.span key={icon.name}>{icon.icon}</motion.span>
       ) : null;
     });
     return (
-      <li
+      <motion.li
+        custom={i}
+        initial="hidden"
+        animate="visible"
+        variants={sidebarVariants}
         key={i}
-        className="flex items-center border-b-[1px] border-neutral-900 justify-between gap-2 p-3 w-full hover:bg-neutral-900 cursor-pointer duration-300 ease-in-out"
+        className={`${
+          sidebarActive
+            ? "p-3 justify-between gap-2"
+            : "py-2 mb-2 justify-center"
+        } flex items-center border-b-[1px] border-neutral-900 w-full hover:bg-neutral-900 cursor-pointer duration-300 ease-in-out`}
       >
-        {link.name}
-        {Icon}
-      </li>
+        <motion.span
+          variants={sidebarVariants}
+          animate={sidebarActive ? "visible" : "hidden"}
+        >
+          {sidebarActive ? link.name : null}
+        </motion.span>
+        <span>{Icon}</span>
+      </motion.li>
     );
   });
 };
