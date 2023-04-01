@@ -1,24 +1,96 @@
 import global from "@/state/global";
 import React from "react";
 import SmallImageComponent from "../SmallImageComponent/SmallImage.component";
-import UserPopupComponent from "../UserPopupComponent/UserPopup.component";
+import { motion } from "framer-motion";
+import { userMenu } from "@/statics/userMenu";
+import { userMenuVariants } from "@/lib/motionVariants";
+import { IoIosLogOut } from "react-icons/io";
+import { useSession } from "next-auth/react";
+
+const menuVariants = {
+  hidden: {
+    opacity: 1,
+    height: "3rem",
+    width: "3rem",
+    borderRadius: "50px",
+    transition: {
+      duration: 0.2,
+      ease: "easeOut",
+    },
+  },
+  visible: {
+    opacity: 1,
+    borderRadius: "10px",
+    height: "23rem",
+    width: "15rem",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+      delay: 0.1,
+    },
+  },
+};
 
 function UserProfileHeaderComponent() {
+  const { data: { user: { email, name } = { email: "", name: "" } } = {} } =
+    useSession();
   const {
     userPopup: { active },
   } = global();
 
   return (
-    <div
+    <motion.div
+      variants={menuVariants}
+      initial="hidden"
+      animate={active ? "visible" : "hidden"}
       onClick={(e) => {
         global.setState({ userPopup: { active: !active } }),
           e.stopPropagation();
       }}
-      className="flex items-center gap-2 p-2 relative cursor-pointer select-none bg-black rounded-full border-2 border-neutral-800"
+      className={`${
+        !active && "p-2"
+      } flex flex-col items-center gap-2 relative cursor-pointer select-none bg-black border-2 border-neutral-800 overflow-hidden`}
     >
-      <UserPopupComponent />
       <SmallImageComponent />
-    </div>
+      <div className="">
+        {active ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+              delay: 0.1,
+            }}
+            className="flex flex-col gap-2 w-full"
+          >
+            <ul
+              onClick={(e) => e.stopPropagation()}
+              className="px-6 w-full pb-4 flex flex-col gap-2 bg-[#111111] shadow-lg shadow-neutral-900 pt-6 cursor-default"
+            >
+              <li className="w-full z-10">{name}</li>
+              <li className="w-full z-10">{email}</li>
+            </ul>
+            {userMenu?.map((item, i) => (
+              <motion.li
+                custom={i}
+                initial="hidden"
+                animate="visible"
+                variants={userMenuVariants}
+                key={i}
+                className="hover:bg-neutral-900 px-4 w-full py-2 flex items-center justify-between"
+                onClick={item.action}
+              >
+                {item.name}
+                {item.name === "Logout" ? (
+                  <IoIosLogOut className="text-xl" />
+                ) : null}
+              </motion.li>
+            ))}
+          </motion.div>
+        ) : null}
+      </div>
+    </motion.div>
   );
 }
 
