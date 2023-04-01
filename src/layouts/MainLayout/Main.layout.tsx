@@ -1,4 +1,6 @@
 import { renderDefaultButton } from "@/components/DefaultButtonComponent/DefaultButton.component";
+import HeaderComponent from "@/components/HeaderComponent/Header.component";
+import SearchBarComponent from "@/components/SearchBarComponent/SearchBar.component";
 import SidebarComponent from "@/components/SidebarComponent/Sidebar.component";
 import UserProfileHeaderComponent from "@/components/UserProfileHeaderComponent/UserProfileHeader.component";
 import global from "@/state/global";
@@ -38,7 +40,10 @@ function MainLayout({ children }: any) {
       <LoginPopup />
       <div className="flex">
         <SidebarComponent />
-        <main className="flex-1">{children}</main>
+        <div className="flex-1 relative">
+          <HeaderComponent />
+          <main>{children}</main>
+        </div>
       </div>
     </>
   );

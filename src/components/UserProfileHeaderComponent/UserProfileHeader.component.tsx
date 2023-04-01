@@ -25,7 +25,7 @@ function UserProfileHeaderComponent() {
       }}
       className={`${
         !active && "p-2"
-      } flex flex-col items-center gap-2 relative cursor-pointer select-none bg-black border-2 border-neutral-800 overflow-hidden`}
+      } flex flex-col items-center gap-2 relative cursor-pointer select-none bg-black border-2 border-neutral-800 overflow-hidden z-40`}
     >
       <SmallImageComponent />
       <div className="">

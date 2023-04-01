@@ -4,11 +4,8 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsBookmarkCheck } from "react-icons/bs";
 import { GoProject } from "react-icons/go";
 import { motion } from "framer-motion";
-import {
-  sidebarVariants,
-  userSpaceLinksVariant,
-  userSpaceVariant,
-} from "@/lib/motionVariants";
+import { sidebarVariants, userSpaceVariant } from "@/lib/motionVariants";
+import Loader from "../Loader/Loader.component";
 
 const iconClass = "text-xl";
 const icons = [
@@ -60,13 +57,19 @@ export const renderUserSpace = (props: UserInterface) => {
         />
       </div>
       <div className="flex items-center justify-center w-[95%] relative mt-10">
-        <Image
-          src={image}
-          height="80"
-          width="80"
-          alt={name}
-          className="rounded-full border-2 border-neutral-800 z-10 bg-black"
-        />
+        {!image ? (
+          <div className="w-[4rem] h-[4rem] flex items-center justify-center rounded-full z-30">
+            <Loader />
+          </div>
+        ) : (
+          <Image
+            src={image}
+            height="80"
+            width="80"
+            alt={name}
+            className="rounded-full border-2 border-neutral-800 z-10 bg-black"
+          />
+        )}
         <div className="absolute top-[60%] flex flex-col items-center w-full bg-[#111111] h-fit rounded-md border-2 border-neutral-800 p-2 shadow-md shadow-neutral-800">
           <div className="justify-around flex w-full">
             <p className="flex flex-col items-center">

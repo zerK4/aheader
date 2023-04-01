@@ -15,4 +15,9 @@ export interface GlobalState {
     setActiveOverflowOff: (active: boolean) => void;
     sidebarActive: boolean;
     setSidebarState: (active: boolean) => void;
+    windowSize: number;
+    searchBarStatus: boolean;
+    setSearchBarStatus: (active: boolean) => void;
+    addSomething: boolean;
+    setAddSomething: (active: boolean) => void;
 }

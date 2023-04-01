@@ -8,14 +8,13 @@ import { sidebarButtonVariant, sidebarVariant } from "@/lib/motionVariants";
 
 function SidebarComponent() {
   const { data: session, status } = useSession();
-  const { sidebarActive, setSidebarState } = global();
-  const [windowWitdh, setWindowWidth] = useState(0);
+  const { sidebarActive, setSidebarState, windowSize } = global();
   useEffect(() => {
     window.addEventListener("resize", () => {
-      setWindowWidth(window.innerWidth);
-      windowWitdh <= 800 ? setSidebarState(false) : setSidebarState(true);
+      global.setState({ windowSize: window.innerWidth });
+      windowSize <= 1000 ? setSidebarState(false) : setSidebarState(true);
     });
-  }, [windowWitdh]);
+  }, [windowSize]);
 
   return (
     <motion.div
