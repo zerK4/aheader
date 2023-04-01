@@ -29,7 +29,7 @@ function MainLayout({ children }: any) {
         </div>
       );
     }
-    return <UserProfileHeaderComponent session={session} />;
+    return <UserProfileHeaderComponent />;
   };
 
   return (
