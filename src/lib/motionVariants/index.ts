@@ -50,7 +50,8 @@ export const userMenuVariants = {
   
   export const searchBarVariants = {
     open: {
-      width: "20rem",
+      marginTop: '10rem',
+      width: "100%",
       borderRadius: "0.5rem",
       border: "2px solid #023e8a",
       transition: {
@@ -60,8 +61,9 @@ export const userMenuVariants = {
       },
     },
     closed: {
-      width: "4rem",
+      width: "10rem",
       borderRadius: "8px",
+      border: "2px solid black",
       transition: {
         type: "spring",
         stiffness: 400,
@@ -177,4 +179,34 @@ export const userSpaceLinksVariant = {
       ease: "easeInOut",
     },
   },
+};
+
+export const addSomethingSpace = {
+  hidden: {
+    height: "3.9rem",
+    transition: {
+      duration: 0.2,
+      ease: "easeOut",
+    },
+  },
+  visible: {
+    height: "7rem",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const doSomethingButtonsVariants = {
+  visible: (i: any) => ({
+    opacity: 1,
+    y: 5,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  }),
+  hidden: { opacity: 0, y: -200 },
 };

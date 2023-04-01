@@ -6,17 +6,33 @@ import {
   searchIconVariants,
   searchTextVariants,
 } from "@/lib/motionVariants";
+import global from "@/state/global";
 
 function SearchBarComponent() {
-  const [active, setActive] = useState(false);
+  const {
+    windowSize,
+    sidebarActive,
+    setSidebarState,
+    searchBarStatus: active,
+    setSearchBarStatus: setActive,
+  } = global();
+
+  const handleSearchBar = () => {
+    if (windowSize <= 1000) {
+      setSidebarState(false), setActive(true);
+    }
+    setActive(true);
+  };
 
   return (
     <motion.div
       animate={active ? "open" : "closed"}
       initial="closed"
       variants={searchBarVariants}
-      onClick={() => setActive(true)}
-      className={`mt-6 bg-black border-2 p-2 border-neutral-800 cursor-pointer select-none`}
+      onClick={() => handleSearchBar()}
+      className={`bg-black p-2 cursor-pointer select-none absolute min-w-[10rem] ${
+        active ? "left-0" : "left-[35%]"
+      }`}
     >
       {active ? (
         <div className="flex items-center gap-2">
@@ -27,10 +43,7 @@ function SearchBarComponent() {
           >
             <AiOutlineSearch className="text-lg" />
           </motion.div>
-          <input
-            className="w-full p-2 bg-transparent outline-none border-none"
-            autoFocus
-          />
+          <input className="w-full p-2 bg-transparent outline-none" autoFocus />
           <AiOutlineClose
             onClick={(e) => {
               setActive(false), e.stopPropagation();
@@ -44,7 +57,7 @@ function SearchBarComponent() {
           initial="closed"
           animate={active ? "open" : "closed"}
         >
-          search
+          Search something
         </motion.div>
       )}
     </motion.div>

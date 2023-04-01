@@ -5,9 +5,7 @@ import { NextPageWithLayout } from "./_app";
 
 const Home: NextPageWithLayout = () => {
   return (
-    <div className="flex items-center flex-col gap-10">
-      <SearchBarComponent />
-    </div>
+    <div className="flex items-center flex-col gap-10 mt-20">ldnajldasjk</div>
   );
 };
 

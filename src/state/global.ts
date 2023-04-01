@@ -44,6 +44,19 @@ const global = create<GlobalState>((set) => ({
         set(() => ({
             sidebarActive: active
         }))
+    },
+    windowSize: 2000,
+    searchBarStatus: false,
+    setSearchBarStatus: (status) => {
+        set(() => ({
+            searchBarStatus: status
+        }))
+    } ,
+    addSomething: false,
+    setAddSomething: (status) => {
+        set(() => ({
+            addSomething: status
+        }))
     }
 }))
 
