@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { ReactElement, ReactNode, useEffect, useRef } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { NextPage } from "next";
 import global from "@/state/global";
 
@@ -19,7 +19,7 @@ export default function App({ Component, pageProps, session }: any) {
   useEffect(() => {
     completeOverflowOff
       ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
+      : (document.body.style.overflowY = "hidden");
   }, [completeOverflowOff]);
 
   return (

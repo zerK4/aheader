@@ -1,8 +1,6 @@
-import { getProviders, signIn, getSession } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import global from "../../state/global";
-import Loader from "@/components/Loader/Loader.component";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { renderDefaultButton } from "../DefaultButtonComponent/DefaultButton.component";
 

@@ -38,7 +38,13 @@ const global = create<GlobalState>((set) => ({
     completeOverflowOff: false,
     setActiveOverflowOff: (active) => set(()=> ({
         completeOverflowOff: active
-    }))
+    })),
+    sidebarActive: true,
+    setSidebarState: (active) => {
+        set(() => ({
+            sidebarActive: active
+        }))
+    }
 }))
 
 export default global;
